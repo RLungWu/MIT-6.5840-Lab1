@@ -5,12 +5,10 @@ import "net"
 import "os"
 import "net/rpc"
 import "net/http"
+import "time"
 
 
-type Coordinator struct {
-	// Your definitions here.
-	
-}
+
 
 // Your code here -- RPC handlers for the worker to call.
 
