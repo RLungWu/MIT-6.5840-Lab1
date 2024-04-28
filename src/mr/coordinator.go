@@ -50,7 +50,7 @@ func MakeCoordinator(files []string, nReduce int) *Coordinator {
 	c.genMapTasks(files)
 
 	//periodically re
-	go c.periodicallyRmExpTassks()
+	go c.periodicallyRmExpTasks()
 
 	//listen to rpc call
 	err := c.server()
@@ -116,7 +116,7 @@ func (c *Coordinator) peroidocallyRmExpTasks(){
 					log.Pringf("Task with MapWorker id = %d is expired", task.MapWorkerId)
 				}
 			}
-		}else{
+		}else{  //c.AssignPhase == ReducePhase
 			for i := 0; i < c.ReducerNum; i++{
 				task := c.ReduceChannel
 				c.ReduceChannel <- task
@@ -408,7 +408,7 @@ func (c *Coordinator) rmReduceTmpFiles() error {
 	return nil
 }
  
-// Vist every task in map channel and find out if all map task were done
+// Visit every task in map channel and find out if all map task were done
 func (c *Coordinator) ifAllMapDone() bool {
 	c.Lock.Lock()
 	for i := 0; i < c.MapperNum; i++ {
@@ -454,7 +454,7 @@ func (c *Coordinator) server() {
 	sockname := "/var/tmp/824-mr-"
 	sockname += strconv.Itoa(os.Getuid())
 	os.Remove(sockname)
-	
+
 	l, e := net.Listen("unix", sockname)
 	if e != nil {
 		log.Fatal("listen error:", e)
