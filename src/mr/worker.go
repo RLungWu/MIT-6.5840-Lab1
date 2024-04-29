@@ -290,7 +290,7 @@ func (worker *MRWorker) genReduceRes(intermediate []KeyValue) []KeyValue {
 
 // write reduce task's result to temporary file
 func (worker *MRWorker) writeReduceResToTmpFile(res []KeyValue) (string, error) {
-   tempFile, err := os.CreateTemp(TmpReduceFilePath, "mr-") ///home/distributed_system/tmp_res_file/mr-xxxxx(随机字符串)
+   tempFile, err := os.CreateTemp(TmpReduceFilePath, "mr-") ///home/distributed_system/tmp_res_file/mr-xxxxx
    if err != nil {
       log.Println("writeReduceResToTmpFile.os.CreateTemp err = ", err)
       return "", err
